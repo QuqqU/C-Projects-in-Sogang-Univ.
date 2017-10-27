@@ -44,7 +44,7 @@ void flip(int height, int width, int flag, char** img){
 			for(int i=0;i<height/2;i++)
 				swap(&img[i][j], &img[height-i-1][j]);
 }
-//find which cell should be printed, using DFS.
+//find which cell should be painted, using DFS.
 void dfs(char origin, int* cnt, int* xx, int* yy, int** vis, int x, int y, char color, char** img, int h, int w){
 	vis[x][y]=1; (*cnt)++; img[x][y]=color;
 	for(int i=0;i<4;i++)
