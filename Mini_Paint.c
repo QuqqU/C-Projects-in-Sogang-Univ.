@@ -27,11 +27,15 @@ int min(int a, int b) {
 }
 //swap two integer variables.
 void swp(int* a, int* b){
-	*a^=*b;*b^=*a;*a^=*b;
+	*a = (*a) ^ (*b);
+	*b = (*a) ^ (*b);
+	*a = (*a) ^ (*b);
 }
 //swap two character variables.
 void swap(char* a, char* b){
-	*a^=*b;*b^=*a;*a^=*b;
+	*a = (*a) ^ (*b);
+	*b = (*a) ^ (*b);
+	*a = (*a) ^ (*b);
 }
 //if flag=1 flip the image right and left, else(flage=0) flip it upside down.
 void flip(int height, int width, int flag, char** img){
@@ -44,7 +48,7 @@ void flip(int height, int width, int flag, char** img){
 			for(int i=0;i<height/2;i++)
 				swap(&img[i][j], &img[height-i-1][j]);
 }
-//find which cell should be painted, using DFS.
+//find which cell should be printed, using DFS.
 void dfs(char origin, int* cnt, int* xx, int* yy, int** vis, int x, int y, char color, char** img, int h, int w){
 	vis[x][y]=1; (*cnt)++; img[x][y]=color;
 	for(int i=0;i<4;i++)
@@ -98,6 +102,7 @@ char* copy(int x1, int y1, int c_h, int c_w, int height, int width, char** img){
 			temp[idx++] = img[i][j];
 		temp[idx++] = '\0';
 	}
+	temp[idx++] = '\n';
 	return temp;
 }
 //paste copied image to the origin image.
@@ -105,10 +110,11 @@ void paste(int x2, int y2, int height, int width, char** img, char* temp){
 	int idx = 0;
 	for(int i=y2;i<height;i++){
 		for(int j=x2;j<width;j++){
-			if(temp[idx]=='\0') break;
+			if(temp[idx]=='\0' || temp[idx]=='\n') break;
 			img[i][j] = temp[idx++];
 		}
 		while(temp[idx]!='\0') idx++;
+		if(temp[idx]=='\n') break;
 		idx++;
 	}
 	free(temp);
